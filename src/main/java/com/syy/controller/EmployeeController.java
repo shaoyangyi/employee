@@ -7,10 +7,7 @@ import com.syy.project.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -45,5 +42,28 @@ public class EmployeeController {
         employeeDao.save(employee);
         return "redirect:/emps";
     }
+
+//        修改员工信息前查询员工信息
+    @GetMapping("/emp/{id}")
+    public String toUpdateEmp(@PathVariable("id")Integer id,Model model){
+        Employee employee = employeeDao.getEmployeeById(id);
+        System.out.println(employee);
+        model.addAttribute("emp",employee);
+//        查出所有的部门
+        Collection<Department> departments=departmentDao.getDepartments();
+        model.addAttribute("departments",departments);
+        return "update";
+    }
+
+//        保存员工信息修改
+    @PostMapping("/updateEmp")
+    public String updateEmp(Employee employee){
+        System.out.println(employee);
+//        提交表单,调用底层方法保存员工信息
+        employeeDao.save(employee);
+        return "redirect:/emps";
+    }
+
+
 
 }
