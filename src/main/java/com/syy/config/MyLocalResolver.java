@@ -9,7 +9,7 @@ import java.util.Locale;
 public class MyLocalResolver implements LocaleResolver {
     @Override
     public Locale resolveLocale(HttpServletRequest httpServletRequest) {
-//        获取请求中的语言参数
+//        国际化：获取请求中的语言参数
         String language=httpServletRequest.getParameter("l");
 
         System.out.println(language);
